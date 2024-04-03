@@ -18,8 +18,8 @@ function send(from, to, text, key){
 	var request = new XMLHttpRequest();
 
 	request.open("OPTIONS", URL, false);
-	request.setRequestHeader('Authorization', 'Bearer ' + key);
 	request.setRequestHeader('Access-Control-Request-Method', 'POST');
+	request.setRequestHeader('Access-Control-Request-Headers', 'Authorization, Content-Type');
 	request.onload = () => {console.log(request.responseText)}
 	request.send();
 
