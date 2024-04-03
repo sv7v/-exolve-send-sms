@@ -17,7 +17,11 @@ function send(from, to, text, key){
 
 	var request = new XMLHttpRequest();
 
-	request.open("POST", URL, true);
+	request.open("OPTIONS", "/", false);
+	request.onload = () => {console.log(request.responseText)}
+	request.send();
+
+	request.open("POST", URL, false);
 	request.setRequestHeader('Content-Type', 'application/json');
 	request.setRequestHeader('Authorization', 'Bearer ' + key);
 	request.onload = () => {console.log(request.responseText)}
