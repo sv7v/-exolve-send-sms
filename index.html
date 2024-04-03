@@ -17,7 +17,7 @@ function send(from, to, text, key){
 
 	var request = new XMLHttpRequest();
 
-	request.open("OPTIONS", "/", false);
+	request.open("OPTIONS", URL, false);
 	request.onload = () => {console.log(request.responseText)}
 	request.send();
 
