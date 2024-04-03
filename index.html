@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Отправить SMS из JavaScript через Exolve</title>
+
+<meta charset="utf-8">
+
+<script>
+
+function send(from, to, text, key){
+	var URL = "https://api.exolve.ru/messaging/v1/SendSMS"
+
+	var body = {};
+	body.number      = from;
+	body.destination = to;
+	body.text        = text;
+
+	var request = new XMLHttpRequest();
+
+	request.open("POST", URL, true);
+	request.setRequestHeader('Content-Type', 'application/json');
+	request.setRequestHeader('Authorization', 'Bearer ' + key);
+	request.onload = () => {console.log(request.responseText)}
+	request.send(JSON.stringify(body));
+}
+</script>
+
+<script>
+function hook1(){
+	var from = document.getElementById('from').value;
+	var to   = document.getElementById('to'  ).value;
+	var text = document.getElementById('text').value;
+	var key  = document.getElementById('key' ).value;
+	send(from, to, text, key);
+}
+</script>
+
+</head>
+<body>
+
+<ol>
+	<li>Введите текст:              <textarea autofocus id="text"></textarea>                                   </li>
+	<li>Нажмите кнопку:             <input type="button" value="Отправить этот текст SMS-кой" onclick="hook1()"> </li>
+	<li>Полученный от Exolve ответ: </li>
+	<li>Прочитайте текст: <a href="https://onlinesim.io/free_numbers/russia/79214148290">
+	                               https://onlinesim.io/free_numbers/russia/79214148290</a> </li>
+</ol>
+
+Продвинутые настройки:
+<ul>
+	<li>Отправитель: +<input type="text" value="79014778072" id="from"> </li>
+	<li>Получатель:  +<input type="text" value="79214148290" id="to">   </li>
+	<li>API-ключ:     <textarea id="key">eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJRV05sMENiTXY1SHZSV29CVUpkWjVNQURXSFVDS0NWODRlNGMzbEQtVHA0In0.eyJleHAiOjIwMjMzOTI3MTMsImlhdCI6MTcwODAzMjcxMywianRpIjoiMzViMzdmNzktNTBjYi00ZmNjLTgxZTctZDMwNTc5ZTI1NjM5IiwiaXNzIjoiaHR0cHM6Ly9zc28uZXhvbHZlLnJ1L3JlYWxtcy9FeG9sdmUiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZDg2MGFmN2QtODE0OS00ZDhjLWFlNjItYjE2ZGQ1YmQyNTI1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYjE2YTQ1NmUtMjlmMy00NDMxLWJhOGQtZTFmMmFiOGE5N2Q3Iiwic2Vzc2lvbl9zdGF0ZSI6ImY0YjMyNGQ3LTNiZjgtNDFlYy1iZjc1LTUzYjFkZGM5NzhiYiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1leG9sdmUiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJleG9sdmVfYXBwIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJmNGIzMjRkNy0zYmY4LTQxZWMtYmY3NS01M2IxZGRjOTc4YmIiLCJ1c2VyX3V1aWQiOiJmNmYzYTk2Ny03YTA5LTQ0YTAtODliOS0xODI1NGUzM2UxNTIiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImNsaWVudEhvc3QiOiIxNzIuMjAuMi4yMiIsImNsaWVudElkIjoiYjE2YTQ1NmUtMjlmMy00NDMxLWJhOGQtZTFmMmFiOGE5N2Q3IiwiYXBpX2tleSI6dHJ1ZSwiYXBpZm9uaWNhX3NpZCI6ImIxNmE0NTZlLTI5ZjMtNDQzMS1iYThkLWUxZjJhYjhhOTdkNyIsImJpbGxpbmdfbnVtYmVyIjoiMTIxMjA2OCIsImFwaWZvbmljYV90b2tlbiI6ImF1dDBkZWI4NDg2LWNiZjYtNGVlOC1hMmVlLWJjNzZiNzgwZGFlYSIsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1iMTZhNDU2ZS0yOWYzLTQ0MzEtYmE4ZC1lMWYyYWI4YTk3ZDciLCJjdXN0b21lcl9pZCI6IjMxOTMzIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4yMC4yLjIyIn0.GWP-ZQUCN8CrzZPQAslmjsuB4PxweWQTvmQTCuuPyjhZQhmQckZ68K1TTicUgVzFZFvX8M9BOGxajTbtJ8-X89BO2npNBFA4ouGeseZVUbmTICQULAR1vLf8i7Ao052sIv91DkmydFV1TN_yR9wpHZJfxruYMWo_xcqiiA0pp8vNkWSZfWmGp15_4XONd6GU9-AyUpqUlksmJkxLNME6FUgBCMGejslCkXv6kPvA4hq46k0rAPl3D4KC2rl9xfh3_wMAuvmnMA4ST5b2hH1WcuzLTlnMHJDxWDCJ7kcAdDQ4hg52MONMVkNI_H1RaC2c7DLWjp5eeH0iC6HTTVC_Cw</textarea> </li>
+</ul>
+
+Приложения:
+<ol>
+	<li>Исходный код: <a href="https://github.com/sv7v/exolve-send-sms">
+	                           https://github.com/sv7v/exolve-send-sms</a></li>
+	<li>Документация от Exolve-а: <a href="https://docs.exolve.ru/docs/ru/api-reference/sms-api/sending-sms/">
+	                                       https://docs.exolve.ru/docs/ru/api-reference/sms-api/sending-sms/</a></li>
+</ol>
+
+</body>
+</html>
