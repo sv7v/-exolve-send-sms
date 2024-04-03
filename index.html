@@ -19,6 +19,7 @@ function send(from, to, text, key){
 
 	request.open("OPTIONS", URL, false);
 	request.setRequestHeader('Authorization', 'Bearer ' + key);
+	request.setRequestHeader('Access-Control-Request-Method', 'POST');
 	request.onload = () => {console.log(request.responseText)}
 	request.send();
 
